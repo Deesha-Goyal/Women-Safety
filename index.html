@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Women Safety</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffc1cc;
+            text-align: center;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background-color: #fc6c85;
+            color: white;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            width: 90px;
+            height: auto;
+            margin-right: 10px;
+        }
+        .logo-text {
+            font-size: xx-large;
+            font-weight: bold;
+            color: black;
+        }
+        
+        .navbar button{
+            background-color: #fc6c85;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            font-size: x-large;
+        }
+
+        .navbar button:hover{
+            background-color: #e11667;
+            transition: 0.4s;
+        }
+        .sos {
+            background-color: #e11667;
+            padding: 8px 15px;
+            border-radius: 5px;
+            color: white;
+        }
+        .image-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .hero {
+            padding: 10px;
+            color: black;
+        }
+        .hero h1 {
+            font-size: xxx-large;
+            color: black;
+        }
+        .hero p {
+            font-size: x-large;
+            color: black;
+        }
+        button {
+            margin: 10px;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 25px;
+        }
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 40px;
+        }
+        .feature {
+            width: 200px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            cursor: pointer;
+        }
+        .feature:hover {
+            background-color: #e11667;
+            transition: 0.3s;
+        }
+        .feature img {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 10px;
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="logo.png" alt="Logo">
+            <div class="logo-text">Stree Kavach: "Safety begins with Awareness"</div>
+        </div>
+        <div class="navbar">
+        <button onclick="window.location.href='safety-tips.html'">Safety Tips</button>
+        <button onclick="window.location.href='report-incident.html'">Report Incident</button>
+        <button onclick="window.location.href='report-fir.html'">Report FIR</button>
+        <button onclick="window.location.href='free-call.html'">Free Call</button>
+        <button onclick="window.location.href='alarm.html'">Alarm Sound</button>
+        <span class="circle" id="statusCircle"></span> <!-- Circle beside Help button -->
+    </div>
+    </header>
+    
+    <div class="image-container">
+        <img src="background.png" alt="Women Safety Image">
+    </div>
+    
+    <section class="hero">
+        <h1>Ensuring Women’s Safety Anytime, Anywhere!</h1>
+        <p>“We protect women like Wi-Fi passwords: strong and secure.”</p>
+        <p>“This isn’t just a site, it’s a superhero in pinkish.” 🦸‍♀️</p>
+        <button class="sos" onclick="getStarted()">Get Started</button>
+        <button class="sos" onclick="emergencySOS()">Emergency SOS</button>
+    </section>
+    
+    <section class="features">
+        <div class="feature" onclick="reportFIR()">
+            <img src="fir.png" alt="FIR Icon">
+            <h3>Report FIR</h3>
+            <p>Securely file complaints online</p>
+        </div>
+        <div class="feature" onclick="safetyTips()">
+            <img src="safety.png" alt="Safety Tips">
+            <h3>Safety Tips</h3>
+            <p>Learn self-defense & precautionary measures</p>
+        </div>
+        <div class="feature" onclick="emergencyCall()">
+            <img src="emergency-call.png" alt="Emergency Call">
+            <h3>Emergency Call</h3>
+            <p>Quick dial to police, family, and nearby helpline</p>
+        </div>
+        <div class="feature" onclick="safeZones()">
+            <img src="alarm.png" alt="Alarm Sound">
+            <h3>Alarm Sound</h3>
+            <p>Whistles a loud alarm to alert.</p>
+        </div>
+    </section>
+    
+</body>
+</html>

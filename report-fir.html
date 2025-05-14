@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Report FIR - Women Safety</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #ffc1cc;
+      color: #333;
+    }
+
+    header {
+      background-color: #fc6c85;
+      padding: 15px;
+      text-align: center;
+      color: white;
+    }
+
+    h1 {
+      margin: 20px 0;
+      color: #ff3385;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+
+    label {
+      display: block;
+      margin: 15px 0 5px;
+      font-weight: bold;
+    }
+
+    textarea, input[type="file"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-sizing: border-box;
+      resize: vertical;
+    }
+
+    input[type="radio"] {
+      margin-right: 5px;
+    }
+
+    .report-option {
+      margin-top: 10px;
+    }
+
+    button {
+      background-color: #ff3385;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      margin-top: 20px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #e11667;
+    }
+
+    .success-message {
+      margin-top: 15px;
+      color: green;
+      font-weight: bold;
+    }
+
+    a{
+      font-size: x-large;
+      color: #cc0052;
+    }
+    
+  </style>
+</head>
+<body>
+  <header>
+    <h2>Women Safety Portal</h2>
+  </header>
+
+  <div class="container">
+    <h1>Report a FIR</h1>
+    <div class="report-option">
+      <label><input type="radio" name="reportType" value="text" checked onclick="toggleReportType()" /> Text</label>
+      <label><input type="radio" name="reportType" value="image" onclick="toggleReportType()" /> Image</label>
+      <label><input type="radio" name="reportType" value="voice" onclick="toggleReportType()" /> Voice</label>
+    </div>
+
+    <form id="firForm" onsubmit="submitReport(event)">
+      <div id="textReport">
+        <label for="description">FIR Description:</label>
+        <textarea id="description" rows="6" placeholder="Describe what happened..." required></textarea>
+      </div>
+
+      <div id="imageReport" style="display:none">
+        <label for="imageUpload">Upload Image:</label>
+        <input type="file" id="imageUpload" accept="image/*" />
+      </div>
+
+      <div id="voiceReport" style="display:none">
+        <label>Voice Report:</label>
+        <button type="button" onclick="startRecording()">Start Recording</button>
+        <button type="button" onclick="stopRecording()">Stop Recording</button>
+        <audio id="audioPlayback" controls style="display:none;"></audio>
+      </div>
+
+      <button type="submit">Submit Report</button>
+    </form>
+
+    <p class="success-message" id="message"></p>
+    <a href="index.html">Back to Home</a>
+  </div>
+
+  <script>
+    let mediaRecorder;
+    let audioChunks = [];
+
+    function toggleReportType() {
+      const type = document.querySelector('input[name="reportType"]:checked').value;
+      document.getElementById("textReport").style.display = type === "text" ? "block" : "none";
+      document.getElementById("imageReport").style.display = type === "image" ? "block" : "none";
+      document.getElementById("voiceReport").style.display = type === "voice" ? "block" : "none";
+    }
+
+    function startRecording() {
+      navigator.mediaDevices.getUserMedia({ audio: true })
+        .then(stream => {
+          mediaRecorder = new MediaRecorder(stream);
+          mediaRecorder.start();
+          audioChunks = [];
+          mediaRecorder.addEventListener("dataavailable", event => {
+            audioChunks.push(event.data);
+          });
+          mediaRecorder.addEventListener("stop", () => {
+            const audioBlob = new Blob(audioChunks);
+            const audioUrl = URL.createObjectURL(audioBlob);
+            const audio = document.getElementById("audioPlayback");
+            audio.src = audioUrl;
+            audio.style.display = "block";
+          });
+        });
+    }
+
+    function stopRecording() {
+      if (mediaRecorder) mediaRecorder.stop();
+    }
+
+    function submitReport(event) {
+      event.preventDefault();
+      const type = document.querySelector('input[name="reportType"]:checked').value;
+      const message = document.getElementById("message");
+
+      if (type === "text") {
+        const text = document.getElementById("description").value;
+        if (text.trim() === "") {
+          alert("Please provide a description.");
+          return;
+        }
+        message.textContent = "Your text report has been submitted. Thank you!";
+      } else if (type === "image") {
+        const fileInput = document.getElementById("imageUpload");
+        if (!fileInput.files.length) {
+          alert("Please upload an image.");
+          return;
+        }
+        message.textContent = "Your image report has been submitted. Thank you!";
+      } else if (type === "voice") {
+        if (!audioChunks.length) {
+          alert("Please record your voice before submitting.");
+          return;
+        }
+        message.textContent = "Your voice report has been submitted. Thank you!";
+      }
+
+      document.getElementById("incidentForm").reset();
+      document.getElementById("audioPlayback").style.display = "none";
+      toggleReportType();
+    }
+  </script>
+</body>
+</html>
